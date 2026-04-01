@@ -14,3 +14,13 @@ class Project(BaseModel):
 class RequestData(BaseModel):
     user : User
     project : Project
+
+class Chilli(BaseModel):
+    name : str
+    description : str
+    image_url : str = ''
+    origin : str
+    color : str
+    shuMin : int
+    shuMax : int
+    season : str

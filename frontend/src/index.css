@@ -1,9 +1,12 @@
 :root {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Trebuchet MS', 'Segoe UI', sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #163152;
-  background: linear-gradient(180deg, #eef4ff 0%, #f8fbff 100%);
+  color: #203459;
+  background:
+    radial-gradient(circle at top left, rgba(211, 123, 51, 0.22), transparent 32%),
+    radial-gradient(circle at top right, rgba(60, 100, 164, 0.18), transparent 28%),
+    linear-gradient(180deg, #f6efe6 0%, #eef3f9 52%, #e8eef5 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,16 +19,23 @@
 
 body {
   margin: 0;
+  min-width: 320px;
 }
 
 h1,
 h2,
-p {
+h3,
+p,
+pre {
   margin: 0;
+}
+
+a {
+  color: inherit;
 }
 
 code {
   padding: 2px 6px;
   border-radius: 6px;
-  background: #e7eefc;
+  background: rgba(226, 235, 247, 0.95);
 }

@@ -1,104 +1,206 @@
-.page {
+.shell {
   min-height: 100vh;
-  padding: 48px 20px;
+  padding: 32px 20px 56px;
+}
+
+.shell-home {
   display: grid;
-  gap: 24px;
-  align-items: start;
+  align-items: center;
 }
 
-.form-card,
-.preview-card {
-  background: #ffffff;
-  border: 1px solid #d7deea;
-  border-radius: 18px;
-  padding: 24px;
-  box-shadow: 0 18px 45px rgba(24, 44, 84, 0.08);
+.hero-card,
+.panel,
+.nav-card {
+  background: rgba(255, 255, 255, 0.78);
+  border: 1px solid rgba(115, 139, 170, 0.22);
+  border-radius: 28px;
+  box-shadow: 0 18px 50px rgba(32, 52, 89, 0.12);
+  backdrop-filter: blur(14px);
 }
 
-.form-copy {
-  margin-bottom: 24px;
+.hero-card,
+.panel {
+  padding: 28px;
+}
+
+.hero-card {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.hero-copy,
+.page-header,
+.panel-copy,
+.template-section-copy {
+  display: grid;
+  gap: 10px;
 }
 
 .eyebrow {
-  margin: 0 0 8px;
-  font-size: 0.85rem;
+  margin: 0;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #2f6fed;
+  color: #a44f27;
 }
 
-.description {
-  color: #4f5f7a;
+.hero-description,
+.section-description,
+.panel-copy p,
+.template-section-copy p,
+.nav-card p {
+  color: #53627c;
 }
 
-.project-form {
+.hero-grid,
+.content-grid,
+.template-grid {
   display: grid;
-  gap: 16px;
+  gap: 20px;
 }
 
-.project-form label {
+.hero-grid {
+  margin-top: 28px;
+}
+
+.nav-card {
+  display: grid;
+  gap: 12px;
+  padding: 24px;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease;
+}
+
+.nav-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(164, 79, 39, 0.45);
+  box-shadow: 0 24px 50px rgba(32, 52, 89, 0.16);
+}
+
+.nav-link,
+.back-link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.nav-link {
+  margin-top: 4px;
+  padding: 10px 14px;
+  color: #fffaf4;
+  background: linear-gradient(135deg, #a44f27 0%, #d37b33 100%);
+}
+
+.page-header {
+  max-width: 980px;
+  margin: 0 auto 24px;
+}
+
+.back-link {
+  margin-bottom: 6px;
+  padding: 8px 14px;
+  color: #203459;
+  background: rgba(255, 250, 244, 0.72);
+  border: 1px solid rgba(115, 139, 170, 0.2);
+}
+
+.content-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  align-items: start;
+}
+
+.project-form,
+.template-section {
+  display: grid;
+  gap: 18px;
+}
+
+.project-form label,
+.template-grid label {
   display: grid;
   gap: 8px;
   text-align: left;
 }
 
 .project-form span,
-.preview-card h2 {
+.template-grid span,
+.panel h2,
+.template-section h3 {
+  color: #203459;
+}
+
+.project-form span,
+.template-grid span {
   font-size: 0.95rem;
   font-weight: 600;
-  color: #163152;
 }
 
 .project-form input,
-.project-form select {
+.project-form select,
+.template-grid input {
   width: 100%;
-  box-sizing: border-box;
-  border: 1px solid #c7d2e5;
-  border-radius: 12px;
-  padding: 12px 14px;
+  border: 1px solid #cfd8e6;
+  border-radius: 14px;
+  padding: 13px 15px;
   font: inherit;
-  color: #163152;
-  background: #f7faff;
+  color: #203459;
+  background: rgba(246, 248, 252, 0.92);
 }
 
 .project-form input:focus,
-.project-form select:focus {
-  outline: 2px solid #2f6fed;
+.project-form select:focus,
+.template-grid input:focus {
+  outline: 2px solid #d37b33;
   outline-offset: 2px;
 }
 
 .project-form button {
   border: 0;
-  border-radius: 12px;
-  padding: 14px 18px;
+  border-radius: 16px;
+  padding: 15px 18px;
   font: inherit;
   font-weight: 700;
-  color: #ffffff;
-  background: #163152;
+  color: #fffaf4;
+  background: linear-gradient(135deg, #203459 0%, #335a8f 100%);
   cursor: pointer;
 }
 
-.project-form button:hover {
-  background: #21497a;
-}
-
-.preview-card {
-  text-align: left;
-}
-
-.preview-card pre {
-  margin: 12px 0 0;
+.preview-panel pre {
+  margin: 14px 0 0;
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 18px;
   overflow-x: auto;
-  background: #0f1b2d;
-  color: #d8e6ff;
+  background: #12203a;
+  color: #dce8ff;
 }
 
-@media (min-width: 860px) {
-  .page {
-    grid-template-columns: minmax(0, 2fr) minmax(320px, 1fr);
-    padding: 64px 32px;
+.template-section {
+  padding-top: 6px;
+}
+
+@media (min-width: 760px) {
+  .hero-grid,
+  .template-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 980px) {
+  .shell {
+    padding: 48px 32px 72px;
+  }
+
+  .content-grid {
+    grid-template-columns: minmax(0, 1.8fr) minmax(320px, 0.9fr);
   }
 }

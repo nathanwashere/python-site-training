@@ -1,169 +1,43 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import HomePage from './pages/HomePage.jsx'
+import ProjectInfoPage from './pages/ProjectInfoPage.jsx'
+import CustomInfoTemplatePage from './pages/CustomInfoTemplatePage.jsx'
 
-  const apiUrl = 'http://127.0.0.1:8000';
-
-const initialFormData = {
-  fullName: '',
-  email: '',
-  age: '',
-  gender: '',
-  projectName: '',
-  participantsAmount: '',
-  supervisorName: '',
+const routes = {
+  '#/': HomePage,
+  '#/project-info': ProjectInfoPage,
+  '#/custom-template': CustomInfoTemplatePage,
 }
 
-async function sendData(payload){
-  const user = {fullName : payload.fullName,
-                email : payload.email,
-                age : payload.age,
-                gender : payload.gender
-  }
-  const project = {
-    name : payload.projectName,
-    amountParticipants : payload.participantsAmount,
-    nameSupervisor : payload.supervisorName
-  }
-  try{
-    const response = await fetch(`${apiUrl}/info`,{
-      method : "POST",
-      body : JSON.stringify({user : user, project : project},),
-      headers : {
-        "Content-Type" : "application/json",
-      },
-    });
-    if(!response.ok){
-      throw new Error("Could not get to /info!")
-    }
-    const data = await response.json();
-    console.log("This is data: ", data);
-  }catch(error){
-    console.log("Error while sending data to create user:\n",error)
-  }
-
-
+function getCurrentRoute() {
+  return window.location.hash || '#/'
 }
 
 function App() {
-  const [formData, setFormData] = useState(initialFormData)
+  const [route, setRoute] = useState(getCurrentRoute())
 
-  const handleChange = ({ target }) => {
-    const { name, value } = target
+  useEffect(() => {
+    const syncRoute = () => {
+      const nextRoute = getCurrentRoute()
 
-    setFormData((currentData) => ({
-      ...currentData,
-      [name]: value,
-    }))
-  }
+      if (!routes[nextRoute]) {
+        window.location.hash = '#/'
+        return
+      }
 
-  const handleSubmit = (event) => {
-    event.preventDefault()
-    console.log('Form data ready for backend:', formData)
-    sendData(formData);
-  }
+      setRoute(nextRoute)
+    }
 
-  return (
-    <main className="page">
-      <section className="form-card">
-        <div className="form-copy">
-          <p className="eyebrow">Simple Vite Form</p>
-          <h1>Project registration</h1>
-          <p className="description">
-            All values are stored in one variable: <code>formData</code>.
-          </p>
-        </div>
+    syncRoute()
+    window.addEventListener('hashchange', syncRoute)
 
-        <form className="project-form" onSubmit={handleSubmit}>
-          <label>
-            <span>Full name</span>
-            <input
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              placeholder="John Smith"
-            />
-          </label>
+    return () => window.removeEventListener('hashchange', syncRoute)
+  }, [])
 
-          <label>
-            <span>Email</span>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="john@example.com"
-            />
-          </label>
+  const Page = routes[route] ?? HomePage
 
-          <label>
-            <span>Age</span>
-            <input
-              type="number"
-              name="age"
-              value={formData.age}
-              onChange={handleChange}
-              placeholder="25"
-            />
-          </label>
-
-          <label>
-            <span>Gender</span>
-            <select
-              name="gender"
-              value={formData.gender}
-              onChange={handleChange}
-            >
-              <option value="">Select gender</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </label>
-
-          <label>
-            <span>Project name</span>
-            <input
-              type="text"
-              name="projectName"
-              value={formData.projectName}
-              onChange={handleChange}
-              placeholder="Community Study"
-            />
-          </label>
-
-          <label>
-            <span>Amount of participants</span>
-            <input
-              type="number"
-              name="participantsAmount"
-              value={formData.participantsAmount}
-              onChange={handleChange}
-              placeholder="10"
-            />
-          </label>
-
-          <label>
-            <span>Name of supervisor</span>
-            <input
-              type="text"
-              name="supervisorName"
-              value={formData.supervisorName}
-              onChange={handleChange}
-              placeholder="Dr. Sarah Lee"
-            />
-          </label>
-
-          <button type="submit">Submit</button>
-        </form>
-      </section>
-
-      <section className="preview-card">
-        <h2>Current formData</h2>
-        <pre>{JSON.stringify(formData, null, 2)}</pre>
-      </section>
-    </main>
-  )
+  return <Page />
 }
 
 export default App
