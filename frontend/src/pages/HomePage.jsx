@@ -13,6 +13,13 @@ const navigationCards = [
     description:
       'Use a ready-made template with labeled input boxes for any other information you want to collect.',
   },
+  {
+    href: '#/peppers',
+    eyebrow: 'Pepper page',
+    title: 'Pepper gallery',
+    description:
+      'Open a dedicated page that loads the peppers from the backend and shows all their details with images.',
+  },
 ]
 
 function HomePage() {
@@ -23,9 +30,9 @@ function HomePage() {
           <p className="eyebrow">Frontend dashboard</p>
           <h1>Choose the page you want to work on</h1>
           <p className="hero-description">
-            This home page keeps the frontend organized. Use the two buttons
-            below to open your current form or a clean template page you can
-            extend later.
+            This home page keeps the frontend organized. Use these links to
+            open your existing forms or the new peppers page that reads the
+            Excel-loaded data from the backend.
           </p>
         </div>
 

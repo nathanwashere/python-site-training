@@ -3,11 +3,13 @@ import './App.css'
 import HomePage from './pages/HomePage.jsx'
 import ProjectInfoPage from './pages/ProjectInfoPage.jsx'
 import CustomInfoTemplatePage from './pages/CustomInfoTemplatePage.jsx'
+import PeppersPage from './pages/PeppersPage.jsx'
 
 const routes = {
   '#/': HomePage,
   '#/project-info': ProjectInfoPage,
   '#/custom-template': CustomInfoTemplatePage,
+  '#/peppers': PeppersPage,
 }
 
 function getCurrentRoute() {

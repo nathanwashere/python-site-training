@@ -32,3 +32,34 @@ def create_chilli(chilli, is_available,
     except Exception as e:
         print("Error while trying to create a chilli:\n ",e)
         return "Chilli has not been created = ERROR!"
+
+
+def get_all_chillies():
+    try:
+        conn = get_connection()
+        cursor = conn.cursor()
+
+        query = """
+        SELECT
+            name,
+            description,
+            image_url,
+            shu_min,
+            shu_max,
+            origin,
+            color,
+            is_available,
+            stock_quantity,
+            season
+        FROM chilli
+        ORDER BY name ASC
+        """
+        cursor.execute(query)
+        chillies = cursor.fetchall()
+        cursor.close()
+        conn.close()
+
+        return chillies
+    except Exception as e:
+        print("Error while trying to fetch chillies:\n ", e)
+        return []

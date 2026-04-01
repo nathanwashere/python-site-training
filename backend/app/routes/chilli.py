@@ -1,21 +1,37 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from app.models import Chilli
-from app.services.chilli_service import create_chilli
+from app.services.chilli_service import create_chilli, get_all_chillies
 
 
 
 router = APIRouter()
 
-IMAGE_MAP = {
-    "Bishop’s Crown" : "bishop's_crown.jpg"
-}
+DEFAULT_IMAGE_URL = "../chilli_images/default.jpg"
+IMAGE_URL_PREFIX = "../chilli_images/"
+
+
+def normalize_image_url(image_url: str) -> str:
+    cleaned = image_url.strip()
+    if not cleaned:
+        return DEFAULT_IMAGE_URL
+    if "://" in cleaned or cleaned.startswith("../") or cleaned.startswith("/"):
+        return cleaned
+    return f"{IMAGE_URL_PREFIX}{cleaned}"
+
+
+def build_public_image_url(request: Request, image_url: str) -> str:
+    normalized = normalize_image_url(image_url)
+    if "://" in normalized:
+        return normalized
+
+    public_path = normalized.removeprefix("../")
+    return str(request.base_url).rstrip("/") + f"/{public_path}"
 
 @router.post('/chillies')
-def add_user(chilli : Chilli):
+def add_chilli(chilli : Chilli):
     chilli.shuMin = int(chilli.shuMin)
     chilli.shuMax = int(chilli.shuMax)
-    filename = IMAGE_MAP.get(chilli.name, 'default.jpg')
-    chilli.image_url = f'../chilli_images/{filename}'
+    chilli.image_url = normalize_image_url(chilli.image_url)
     is_available = True
     stock_quantity = 20
 
@@ -24,3 +40,24 @@ def add_user(chilli : Chilli):
     return {
         'message' : response
     }
+
+
+@router.get('/chillies')
+def list_chillies(request: Request):
+    chillies = get_all_chillies()
+
+    return [
+        {
+            'name': chilli[0],
+            'description': chilli[1],
+            'image_url': build_public_image_url(request, chilli[2] or ''),
+            'shu_min': chilli[3],
+            'shu_max': chilli[4],
+            'origin': chilli[5],
+            'color': chilli[6],
+            'is_available': chilli[7],
+            'stock_quantity': chilli[8],
+            'season': chilli[9],
+        }
+        for chilli in chillies
+    ]
